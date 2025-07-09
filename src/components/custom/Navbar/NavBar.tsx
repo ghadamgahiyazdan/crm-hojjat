@@ -10,7 +10,7 @@ import { logout as LogoutUser } from "@/service";
 
 const NavBar = () => {
   const currentPath = usePathname();
-  const { vaildate, set_refresher } = useStore();
+  const { vaildate, set_refresher, set_sidebar } = useStore();
 
   // Find current navigation item based on the current path
   const currentNav = navItems.find((nav) => nav.link === currentPath);
@@ -24,6 +24,7 @@ const NavBar = () => {
             {vaildate ? (
               <Button
                 variant="destructive"
+                className="ml-2 xl:ml-0"
                 onClick={async () => {
                   await LogoutUser();
                   set_refresher();
@@ -45,7 +46,7 @@ const NavBar = () => {
             {currentPath === "/" ? (
               <h1 className="xl:text-3xl font-bold border-b py-1">همراه کارفرما</h1>
             ) : (
-              <h1 className="text-3xl font-bold border-b py-1">
+              <h1 className="text-sm font-bold border-b py-1">
                 <Link href="/">
                   <span className="cursor-pointer">همراه کارفرما</span>
                 </Link>
@@ -74,7 +75,9 @@ const NavBar = () => {
             
             {/* Mobile Menu Icon */}
             <div className="xl:hidden flex items-center px-4">
-              <img src={"side.svg"}/>
+              <img src={"side.svg"}
+              onClick={()=>set_sidebar(true)}
+              />
             </div>
           </div>
         </div>

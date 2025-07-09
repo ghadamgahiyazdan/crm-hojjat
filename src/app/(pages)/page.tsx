@@ -1,5 +1,21 @@
-import HomeMobile from "@/components/custom/home/mobile/HomeMobile";
-import HomePc from "@/components/custom/home/pc/HomePc";
+import dynamic from 'next/dynamic';
+import Loading from '../loading';
+
+const HomePc = dynamic(
+  () => import('@/components/custom/home/pc/HomePc'),
+  { 
+    loading: () => <Loading/>,
+    ssr: true
+  }
+);
+
+const HomeMobile = dynamic(
+  () => import('@/components/custom/home/mobile/HomeMobile'),
+  { 
+    loading: () => <Loading/>,
+    ssr: true
+  }
+);
 
 const Home = () => {
   return (
