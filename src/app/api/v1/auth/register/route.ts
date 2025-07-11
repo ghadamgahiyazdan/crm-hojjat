@@ -6,6 +6,12 @@ import { apimessages } from "@/consts/apimessages";
 import { registerSchema } from "@/validate/register";
 
 const prisma = new PrismaClient();
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const Kavenegar = require("kavenegar");
+const api = Kavenegar.KavenegarApi({
+  apikey:
+    "367356484E6558687A48426D2F556D61666D77654134442B7977692B3356704158727A31374E58554635453D",
+});
 
 const BCRYPT_SALT_ROUNDS = 10;
 const OTP_EXPIRY_MINUTES = 5; // مدت اعتبار کد تایید به دقیقه
@@ -30,7 +36,7 @@ export async function POST(req: NextRequest) {
 
     // بررسی اینکه شماره موبایل قبلاً ثبت نشده باشد
     const existingUser = await prisma.user.findFirst({
-      where: { phone : phone },
+      where: { phone: phone },
     });
 
     if (existingUser) {
@@ -66,7 +72,8 @@ export async function POST(req: NextRequest) {
 
     // در محیط توسعه، کد تایید را در کنسول نمایش می‌دهیم (در محیط واقعی باید پیامک شود)
     console.log(`کد تایید برای شماره ${phone}: ${otp}`);
-
+//    api.Send({ message: `${otp}` , sender: "2000660110" , receptor: `${phone}` });
+    api.Send({ message: `${otp}` , sender: "2000660110" , receptor: `09154399318` });   
     // پاسخ موفقیت‌آمیز با پیام فارسی و اطلاعات کاربر
     const response = NextResponse.json(
       {
